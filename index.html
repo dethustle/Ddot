@@ -3,232 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DART Ticket</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background-color: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .ticket-container {
-            background-color: #f5f5f5;
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            color: #666;
-            cursor: pointer;
-        }
-
-        .header {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            text-align: left;
-        }
-
-        .title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 4px;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .circle-container {
-            margin: 80px 0 40px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .outer-circle {
-            width: 200px;
-            height: 200px;
-            background-color: #1a3a6b;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .inner-circle {
-            width: 120px;
-            height: 120px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .dart-text {
-            color: #1a3a6b;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .dart-text::before {
-            content: "▶";
-            margin-right: 8px;
-            font-size: 12px;
-        }
-
-        .time {
-            font-size: 36px;
-            font-weight: 900;
-            color: #333;
-            margin: 30px 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            white-space: nowrap;
-        }
-
-        .ticket-info {
-            margin-top: 100px;
-            text-align: left;
-        }
-
-        .fare-type {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 8px;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .location {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .expires {
-            font-size: 16px;
-            color: #666;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            margin-top: 20px;
-            display: block;
-            width: 100%;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.05);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
+    <title>Document</title>
+    <script>
+        // Function to enter fullscreen mode
+        function enterFullscreen() {
+            const element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) { // Firefox
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) { // IE/Edge
+                element.msRequestFullscreen();
             }
         }
-    </style>
+
+        // Automatically enter fullscreen mode when the page loads
+        window.onload = enterFullscreen;
+    </script>
 </head>
 <body>
-    <div class="ticket-container">
-        <div class="close-btn">×</div>
-        
-        <div class="header">
-            <div class="title">DART</div>
-            <div class="subtitle">Show operator your ticket</div>
-        </div>
-
-        <div class="circle-container">
-            <div class="outer-circle">
-                <div class="inner-circle">
-                    <div class="dart-text">DART</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="time" id="currentTime">7:57:00 PM</div>
-
-        <div class="ticket-info">
-            <div class="fare-type">Regional Full Fare 4 Hour</div>
-            <div class="location">Detroit, MI</div>
-            <div class="expires" id="expirationTime">Expires loading...</div>
-        </div>
-    </div>
-
-    <script>
-        function updateTime() {
-            const timeElement = document.getElementById('currentTime');
-            if (!timeElement) return;
-            
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            
-            const timeString = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
-            timeElement.textContent = timeString;
-        }
-
-        function setExpirationTime() {
-            const expElement = document.getElementById('expirationTime');
-            if (!expElement) {
-                console.log("Expiration element not found!");
-                return;
-            }
-            
-            const now = new Date();
-            const expiration = new Date(now.getTime() + (4 * 60 * 60 * 1000));
-            
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            
-            let expHours = expiration.getHours();
-            const expMinutes = expiration.getMinutes();
-            const expAmpm = expHours >= 12 ? 'PM' : 'AM';
-            
-            expHours = expHours % 12;
-            expHours = expHours ? expHours : 12;
-            
-            const expirationString = `Expires ${months[expiration.getMonth()]} ${expiration.getDate()}, ${expiration.getFullYear()} at ${expHours}:${expMinutes.toString().padStart(2, '0')} ${expAmpm}`;
-            
-            expElement.textContent = expirationString;
-            console.log("Expiration set to:", expirationString);
-        }
-
-        // Start immediately
-        updateTime();
-        setExpirationTime();
-        setInterval(updateTime, 1000);
-    </script>
+    <h1>Hello, World!</h1>
 </body>
 </html>
